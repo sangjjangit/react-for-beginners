@@ -1,0 +1,84 @@
+import { useState, useEffect } from "react";
+
+function App() {
+  const [isLoading, setLoading] = useState(true);
+  const [coins, setCoins] = useState([]);
+  const [selectedIdx, setSelectedIdx] = useState(0);
+  const [doller, setDoller] = useState(0);
+  const [result, setResult] = useState("");
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+    if (doller === 0 || doller === "") {
+      return;
+    }
+    const {
+      quotes: {
+        USD: { price },
+      },
+      symbol,
+    } = coins[selectedIdx];
+    setResult(`${symbol}: ${doller / price}`);
+  };
+  const onChange = (event) => setDoller(event.target.value);
+  const onSelectChange = (event) => setSelectedIdx(event.target.value);
+
+  useEffect(() => {
+    fetch("https://api.coinpaprika.com/v1/tickers")
+      .then((response) => response.json())
+      .then((json) => {
+        console.dir(json);
+        setCoins(json);
+        setLoading(false);
+      });
+  }, []);
+
+  return (
+    <div>
+      <h1>The Coins!{isLoading ? "" : `(${coins.length})`}</h1>
+      <hr />
+      {isLoading ? (
+        <strong>Loading...</strong>
+      ) : (
+        <>
+          <select onChange={onSelectChange}>
+            {coins.map(
+              (
+                {
+                  id,
+                  name,
+                  quotes: {
+                    USD: { price },
+                  },
+                  symbol,
+                },
+                idx,
+              ) => {
+                return (
+                  <option key={id} value={idx}>
+                    {name} / {symbol} / ${price}
+                  </option>
+                );
+              },
+            )}
+          </select>
+
+          <form onSubmit={onSubmit}>
+            <input
+              type="number"
+              value={doller}
+              onChange={onChange}
+              onFocus={() => setDoller("")}
+              placeholder="Convert Doller"
+            />
+            <button>Change</button>
+          </form>
+
+          <h2>{result}</h2>
+        </>
+      )}
+    </div>
+  );
+}
+
+export default App;

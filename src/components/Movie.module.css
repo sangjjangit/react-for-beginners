@@ -1,0 +1,31 @@
+.movie {
+  display: flex;
+  gap: 30px;
+  margin: 30px;
+  background-color: rgba(245, 222, 179, 0.6);
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.movie__img {
+  border-radius: 10px;
+}
+.movie__text {
+  position: relative;
+}
+
+.movie__sqenres {
+  list-style-type: none;
+  display: flex;
+  gap: 10px;
+  padding-left: 0px;
+  position: absolute;
+  bottom: 0px;
+  > li {
+    background-color: rgb(245, 222, 179, 0.7);
+    padding: 5px;
+    border-radius: 10px;
+    box-shadow: 1px 1px rgba(0,0,0,0.3);
+
+  }
+}

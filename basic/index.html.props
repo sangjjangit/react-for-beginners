@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Props</title>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+
+  <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <script type="text/babel">
+    const root = document.getElementById("root");
+
+    function Btn({ text, size }) {
+      return (
+        <button
+          style={{
+            backgroundColor: "tomato",
+            fontSize: size ? size : 38,
+            textAlign: "center",
+            color: "white",
+            padding: "20px 20px",
+            borderRadius: "20px",
+            border: "0px solid rgba(0,0,0,0)",
+            margin: "10px",
+          }}
+        >
+          {text}
+        </button>
+      );
+    }
+    function App() {
+      return (
+        <div>
+          <h1>Props</h1>
+          <hr />
+          <Btn text="Insert" size={18} />
+          <Btn text="Update" size={28} />
+          <Btn text="Delete" />
+        </div>
+      );
+    }
+
+    ReactDOM.render(<App />, root);
+  </script>
+</html>

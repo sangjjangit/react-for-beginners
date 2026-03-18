@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Props - PropTypes</title>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+
+  <script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/prop-types@15.7.2/prop-types.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <script type="text/babel">
+    const root = document.getElementById("root");
+
+    function Btn({ text, size = 38, onClick }) {
+      console.log(`${text} was rendered`);
+      return (
+        <button
+          onClick={onClick}
+          style={{
+            backgroundColor: "tomato",
+            fontSize: size,
+            textAlign: "center",
+            color: "white",
+            padding: "20px 20px",
+            borderRadius: "20px",
+            border: "0px solid rgba(0,0,0,0)",
+            margin: "10px",
+          }}
+        >
+          {text}
+        </button>
+      );
+    }
+
+    Btn.propTypes = {
+      text: PropTypes.string.isRequired,
+      size: PropTypes.number,
+      onClick: PropTypes.func,
+    };
+
+    const MemorizedBtn = React.memo(Btn);
+    function App() {
+      const [value, setValue] = React.useState("Delete");
+      const click = () => {
+        setValue("Contiune");
+      };
+      return (
+        <div>
+          <h1>Props</h1>
+          <hr />
+          <MemorizedBtn text="Insert" size={18} />
+          <MemorizedBtn text="Update" size={28} />
+          <MemorizedBtn text={value} onClick={click} />
+        </div>
+      );
+    }
+
+    ReactDOM.render(<App />, root);
+  </script>
+</html>
